@@ -94,6 +94,8 @@ class orderItems : public Orders{
 
                 delete[] newArray;
             }
+
+            delete[] cart;
         }
 
         void displayOrderItems(std::string* newArray){
