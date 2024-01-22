@@ -68,32 +68,35 @@ class orderItems : public Orders{
 
         std::string* placeOrder(){
             std::string* cart = new std::string[max_order];
+            std::string* newArray = new std::string[max_order];
 
             while(true){
                 std::cout<<(current_order + 1)<<". ";   //using current_order as a bullet numbering
                 std::string item = getItem();
+                
+                if(item == "done"){break;}
 
-                std::string* newArray = new std::string[max_order];
-
-                for(int x = 0; x < current_order; x++){
-                    newArray[x] = cart[x];     //storing items form cart to new array
-                }
-                delete[] cart;
-
-                if(item == "done"){return newArray;}
-
-                newArray[current_order] = item;   //gets item input
+                cart[current_order] = item;
                 current_order += 1;
-                max_order += 1;  //increment by 1
-
-                cart = new std::string[max_order]; //assign cart array pointer to new increased cart size
+                max_order += 1;
 
                 for(int x = 0; x < current_order; x++){
-                    cart[x] = newArray[x];    //storing items in cart from new array
+                    newArray[x] = cart[x];
                 }
 
-                delete[] newArray;
+                delete[] cart;  //delete cart array
+                cart = new std::string[max_order];  //create new cart array with increased size
+
+                for(int x = 0; x < current_order; x++){
+                    cart[x] = newArray[x];
+                }
+
+                delete[] newArray;  //delete newArray array
+                newArray = new std::string[max_order]; //create new newArray array
             }
+
+            delete[] newArray;
+            return cart;
         }
 
         void displayOrderItems(std::string* newArray){
@@ -170,6 +173,7 @@ int main(){
         }
         else{
             std::cout<<"Order Cancelled !!!\n"<<std::endl;
+            delete[] ordereditems;
         }
     }
 
@@ -187,6 +191,11 @@ int main(){
     if(endChoice == 4){
         o1.recieveOrder();
         o1.displayOrderItems(ordereditems);
+        delete[] ordereditems;
+    }
+
+    else{
+        delete[] ordereditems;
     }
 
     return 0;
