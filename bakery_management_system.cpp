@@ -97,6 +97,10 @@ class orderItems : public Orders{
 
             delete[] newArray;
             return cart;
+
+            //This method was causing memory leak issue. Althought I have addressed it there might still be memory leak.
+            //This way of using arrays is not recommended and is only done for learning purposes. std::vector shall be used for these kind
+            //of cases.
         }
 
         void displayOrderItems(std::string* newArray){
